@@ -1,0 +1,29 @@
+import hashlib
+import random
+import time
+import string
+
+start_time = time.time()
+print("Start time = ", start_time)
+hash_image = "abcdef0"
+hash_digits = 7
+N = random.randint(5,20)
+preimage = ''.join(random.choices(string.ascii_lowercase +
+                             string.digits, k=N))
+hashval=hashlib.sha1(preimage.encode('utf-8')).hexdigest()
+hashval = hashval[:hash_digits]
+n = 1
+
+while hashval != hash_image:
+    preimage = ''.join(random.choices(string.ascii_lowercase +
+                             string.digits, k=N))
+    hashval=hashlib.sha1(preimage.encode('utf-8')).hexdigest()
+    hashval = hashval[:hash_digits]
+    N = random.randint(5,20)
+    n+=1
+print("Preimage = ",preimage)
+print("Hash value for preimage = ", hashval)
+print("Number of calls to SHA-1 = ", n)
+end_time = time.time()
+print("End time = ", end_time)
+print("Time elased = ", end_time - start_time)
