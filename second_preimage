@@ -1,0 +1,35 @@
+import hashlib
+import random
+import time
+import string
+
+start_time = time.time()
+print("Start time = ", start_time)
+
+name = "karl"
+hash_digits = 7
+N = random.randint(5,25)
+i = 1
+hashval=hashlib.sha1(name.encode('utf-8')).hexdigest()
+name_hash_value = hashval[:hash_digits]
+print("Hash value for string", name, "= ", name_hash_value)
+
+preimage_2 = ''.join(random.choices(string.ascii_lowercase +
+                             string.digits, k=N))
+preimage_hash = hashlib.sha1(preimage_2.encode('utf-8')).hexdigest()
+compare_this = preimage_hash[:hash_digits]
+
+while compare_this != name_hash_value:
+    preimage_2 = ''.join(random.choices(string.ascii_lowercase +
+                             string.digits, k=N))
+    preimage_hash = hashlib.sha1(preimage_2.encode('utf-8')).hexdigest()
+    compare_this = preimage_hash[:hash_digits]
+    i+=1
+    N = random.randint(5,25)
+
+print("Second preimage = ",preimage_2)
+print("Hash value for second preimage = ", compare_this)
+print("Number of calls to SHA-1 = ", i)
+end_time = time.time()
+print("End time = ", end_time)
+print("Time elased = ", end_time - start_time)
