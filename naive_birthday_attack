@@ -1,0 +1,35 @@
+import hashlib
+import random
+import time
+import string
+
+def birthday1():
+    start_time = time.time()
+    print("Start time = ", start_time)
+    dict = {}
+    n = 1
+    s = str(random.randint(1,1000000000000))
+    hashval = hashlib.sha1(s.encode('utf-8')).hexdigest()
+    hashval = hashval[:8]
+    while hashval not in dict.values():
+        dict[s] = hashval
+        s = str(random.randint(1,1000000000000))
+        hashval=hashlib.sha1(s.encode('utf-8')).hexdigest()
+        hashval = hashval[:8]
+        n+=1
+    #prints the second key:value pair found with the matching hash
+    print("First key:value pair with matching hash = ",
+          s,":", hashval)
+    #finds the first key:value pair found with the matching hash
+    for key, value in dict.items():
+        if value == hashval:
+            print("Second key:value pair with matching hash = ",
+                  key, ":", value)
+    end_time = time.time()
+    #prints the number of calls to SHA-1 stored in variable n
+    print("Number of calls to SHA-1 = ", n)
+    print("End time = ", end_time)
+    #prints total time elapsed in seconds
+    print("Time elapsed in seconds = ", end_time - start_time)
+
+birthday1()
